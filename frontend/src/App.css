@@ -1,0 +1,11 @@
+.App {
+  text-align: center;
+  font-family: "Open Sans";
+  font-weight: 400;
+  letter-spacing: normal;
+  vertical-align: baseline;
+}
+
+.chakra-ui-light {
+  background: #c9c9c9;
+}
