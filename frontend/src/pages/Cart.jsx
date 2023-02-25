@@ -175,7 +175,7 @@ const Cart = ({ btnRef, isOpen, onClose }) => {
                   borderColor="red"
                   color="red"
                   bg="#f1f3f8"
-                  fontSize={16}
+                  fontSize={[12, 14, 16, 16]}
                   gap="2"
                 >
                   <Button border="1px solid red">View Cart</Button>

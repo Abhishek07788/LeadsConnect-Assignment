@@ -146,7 +146,7 @@ const ProductMapping = (props) => {
               onChange={(e) => setQty(e.target.value)}
               borderColor="#cecece"
               fontWeight={600}
-              w={[10, 10, 19, 19]}
+              w={[10, 10, 20, 20]}
               color="#333e48"
               fontSize={20}
               type="number"

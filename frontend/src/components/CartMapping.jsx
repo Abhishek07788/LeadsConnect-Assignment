@@ -95,8 +95,8 @@ const CartMapping = (props) => {
   return (
     <Box display="flex" bg="#ffff" p="3" borderRadius={10} gap="3" w="100%">
       <Image w="90px" h="110px" src={image} alt="img" />
-      <Box>
-        <Box display="flex" w="260px" justifyContent="space-between">
+      <Box w="100%">
+        <Box display="flex" w="100%" justifyContent="space-between">
           <Text _hover={{ color: "red" }} fontSize="14">
             {title.slice(0, 50)}...
           </Text>
