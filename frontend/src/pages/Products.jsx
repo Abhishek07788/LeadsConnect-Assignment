@@ -63,7 +63,7 @@ const Products = () => {
         )}
 
         {/* ---------- mapping all products ----- */}
-        <SimpleGrid columns={[1, 2, 4, 4]} spacing="10" mt="10">
+        <SimpleGrid columns={[1, 2, 3, 4]} spacing="10" mt="10">
           {productData &&
             productData.map((el) => (
               <ProductMapping key={el.id} {...el} cartData={cartData} />

@@ -70,7 +70,7 @@ const Navbar = () => {
           <Input placeholder="Enter address" />
         </InputGroup>
 
-        <InputGroup w={["60%", "60%", "100%", "100%"]}>
+        <InputGroup w={["50%", "50%", "100%", "100%"]}>
           <InputRightElement
             fontSize={20}
             bg="#f2f2f2"
@@ -89,14 +89,14 @@ const Navbar = () => {
           <option value="women's clothing">Women's clothing</option>
         </Select>
 
-        <Text title="dummy" display={["none", "none", "block", "block"]}>
+        <Text title="dummy" display={["none", "none", "none", "block"]}>
           Recipes
         </Text>
 
         <Text
           w="30%"
           title="dummy"
-          display={["none", "none", "block", "block"]}
+          display={["none", "none", "none", "block"]}
         >
           Partner With Us
         </Text>
@@ -115,7 +115,7 @@ const Navbar = () => {
           gap="3"
           fontSize={20}
         >
-          <BsPersonCircle style={{ marginTop: "5px", fontSize: "30px" }} />
+          <BsPersonCircle style={{fontSize: "30px" }} />
           <Text display={["none", "none", "block", "block"]}>
             signup / login
           </Text>
