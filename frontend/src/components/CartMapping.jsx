@@ -1,19 +1,116 @@
-import { Box, Heading, Image, Text } from "@chakra-ui/react";
+import { Box, Heading, Image, Text, useToast } from "@chakra-ui/react";
 import React from "react";
 import { RiDeleteBinLine } from "react-icons/ri";
+import { useDispatch } from "react-redux";
+import {
+  deleteSingleCart,
+  getAllCarts,
+  updateSingleCart,
+} from "../redux/cart/cart.action";
 
-const CartMapping = () => {
+const CartMapping = (props) => {
+  const { id, title, price, image, quantity } = props;
+  const dispatch = useDispatch();
+  const toast = useToast();
+
+  const handleDelete = (id) => {
+    // --- Alert --
+    toast({
+      title: "Please Wait..",
+      status: "info",
+      duration: 500,
+      isClosable: true,
+      position: "top",
+    });
+    dispatch(deleteSingleCart(id));
+
+    setTimeout(() => {
+      // --- Alert --
+      toast({
+        title: "Product Deleted",
+        status: "success",
+        duration: 2000,
+        isClosable: true,
+        position: "top",
+      });
+      dispatch(getAllCarts());
+    }, 800);
+  };
+
+  // ---------- Quantity Increase ---------
+  const handle_increase_quantity = (id, quantity, price) => {
+    // --- Alert --
+    toast({
+      title: "Please Wait..",
+      status: "info",
+      duration: 500,
+      isClosable: true,
+      position: "top",
+    });
+    dispatch(
+      updateSingleCart(
+        id,
+        quantity + 1,
+        (quantity + 1) * Math.floor(price / quantity)
+      )
+    );
+    setTimeout(() => {
+      dispatch(getAllCarts());
+    }, 900);
+  };
+
+  // ---------- Quantity Decrease ---------
+  const handle_decrease_quantity = (id, quantity, price) => {
+    if (quantity <= 1) {
+      // --- Alert --
+      toast({
+        title: "Can't Decrease..",
+        status: "error",
+        duration: 1200,
+        isClosable: true,
+        position: "top",
+      });
+    } else {
+      // --- Alert --
+      toast({
+        title: "Please Wait..",
+        status: "info",
+        duration: 500,
+        isClosable: true,
+        position: "top",
+      });
+      dispatch(
+        updateSingleCart(
+          id,
+          quantity - 1,
+          (quantity - 1) * Math.floor(price / quantity)
+        )
+      );
+      setTimeout(() => {
+        dispatch(getAllCarts());
+      }, 900);
+    }
+  };
+
   return (
-    <Box display="flex" bg="#ffff" p="3" borderRadius={10} gap="3">
-      <Image
-        w="100px"
-        h="130px"
-        src="https://nourishstore.co.in/wp-content/uploads/2021/04/70-1-300x300.webp"
-        alt="img"
-      />
+    <Box display="flex" bg="#ffff" p="3" borderRadius={10} gap="3" w="100%">
+      <Image w="90px" h="110px" src={image} alt="img" />
       <Box>
-        <Text>Bail Kolhu Cold Pressed Mustard Oil - 500ml Btl</Text>
+        <Box display="flex" w="260px" justifyContent="space-between">
+          <Text _hover={{ color: "red" }} fontSize="14">
+            {title.slice(0, 50)}...
+          </Text>
 
+          {/* ------- Delete ----- */}
+          <Text
+            onClick={() => handleDelete(id)}
+            color="red"
+            fontSize="20"
+            cursor="pointer"
+          >
+            <RiDeleteBinLine />
+          </Text>
+        </Box>
         <Box
           display="flex"
           gap="3"
@@ -22,25 +119,36 @@ const CartMapping = () => {
           fontSize={16}
           mt="2"
         >
-          <Text border="1px solid grey" borderRadius={50} pr="2" pl="2">
+          <Text
+            onClick={() => handle_decrease_quantity(id, quantity, price)}
+            cursor="pointer"
+            border="1px solid grey"
+            borderRadius={50}
+            pr="2"
+            pl="2"
+          >
             -
           </Text>
           <Text border="1px solid grey" borderRadius={6} pr="3" pl="3">
-            1
+            {quantity}
           </Text>
-          <Text border="1px solid grey" borderRadius={50} pr="2" pl="2">
+          <Text
+            onClick={() => handle_increase_quantity(id, quantity, price)}
+            cursor="pointer"
+            border="1px solid grey"
+            borderRadius={50}
+            pr="2"
+            pl="2"
+          >
             +
           </Text>
         </Box>
 
-        <Heading fontSize={20} mt="3" color={"red"}>
-          ₹92.00
+        <Heading fontSize={18} mt="3" color={"red"}>
+          ₹{Math.floor(price)}.00
         </Heading>
         <Text fontSize={14}>(Inclusive of all taxes)</Text>
       </Box>
-      <Text color="red" fontSize="20" mt="-5px" mr="-5px">
-        <RiDeleteBinLine />
-      </Text>
     </Box>
   );
 };

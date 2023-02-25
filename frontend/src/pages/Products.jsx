@@ -1,24 +1,19 @@
 import { Grid, Heading, SimpleGrid, Text } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
-import { getAllProducts } from "../apis/Api";
+import React, { useEffect } from "react";
 import Carousel from "../components/Carousel";
-import Mapping from "../components/ProductMapping";
-
+import { useSelector, useDispatch } from "react-redux";
+import { getAllProducts } from "../redux/product/product.action";
+import { getAllCarts } from "../redux/cart/cart.action";
+import ProductMapping from "../components/ProductMapping";
 const Products = () => {
-  const [data, setData] = useState();
-  const [loading, setLoading] = useState(false);
+  const { Loading, Error, productData } = useSelector((store) => store.Product);
+  const { error, loading, cartData } = useSelector((store) => store.Cart);
+  const dispatch = useDispatch();
 
+  // ---------- get product & cart data ---------
   useEffect(() => {
-    setLoading(true);
-    getAllProducts()
-      .then((res) => {
-        setData(res.data);
-        setLoading(false);
-      })
-      .catch((e) => {
-        console.log(e);
-        setLoading(true);
-      });
+    dispatch(getAllProducts());
+    dispatch(getAllCarts());
   }, []);
 
   return (
@@ -51,17 +46,28 @@ const Products = () => {
         </Text>
 
         {/* ---------- loading indicator -------- */}
-        {loading ? (
-          <Heading color="teal" textAlign="center" fontSize="20" mt="3">
+        {loading || Loading ? (
+          <Heading color="green" textAlign="center" fontSize="20" mt="3">
             loading please wait...
+          </Heading>
+        ) : (
+          ""
+        )}
+        {/* ---------- error indicator -------- */}
+        {error || Error ? (
+          <Heading color="teal" fontSize={20} textAlign="center">
+            server error please refresh the page...
           </Heading>
         ) : (
           ""
         )}
 
         {/* ---------- mapping all products ----- */}
-        <SimpleGrid columns={[2, 2, 4, 4]} spacing="10" mt="10">
-          {data && data.map((el) => <Mapping key={el.id} {...el} />)}
+        <SimpleGrid columns={[1, 2, 4, 4]} spacing="10" mt="10">
+          {productData &&
+            productData.map((el) => (
+              <ProductMapping key={el.id} {...el} cartData={cartData} />
+            ))}
         </SimpleGrid>
       </Grid>
     </SimpleGrid>

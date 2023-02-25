@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import {
   Box,
   Image,
@@ -16,11 +16,21 @@ import { HiLocationMarker } from "react-icons/hi";
 import { CiSearch } from "react-icons/ci";
 import { BsPersonCircle } from "react-icons/bs";
 import { FaShoppingCart } from "react-icons/fa";
+import { getProductByCategory } from "../redux/product/product.action";
 import Cart from "../pages/Cart";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
+  const { total } = useSelector((store) => store.Cart);
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const dispatch = useDispatch();
   const btnRef = useRef();
+
+  // ------- filter ------
+  const handleChange = (e) => {
+    dispatch(getProductByCategory(e.target.value));
+  };
 
   return (
     <SimpleGrid
@@ -46,13 +56,21 @@ const Navbar = () => {
         gap={5}
         w="76%"
       >
-        <Image w="95px" h="50px" src={logo} alt="logo" />
-        <InputGroup w="50%">
+        <Link to="/">
+          <Image
+            display={["none", "none", "block", "block"]}
+            w="205px"
+            h="50px"
+            src={logo}
+            alt="logo"
+          />
+        </Link>
+        <InputGroup w="50%" display={["none", "none", "block", "block"]}>
           <InputLeftElement fontSize={20} children={<HiLocationMarker />} />
           <Input placeholder="Enter address" />
         </InputGroup>
 
-        <InputGroup w="100%">
+        <InputGroup w={["60%", "60%", "100%", "100%"]}>
           <InputRightElement
             fontSize={20}
             bg="#f2f2f2"
@@ -61,14 +79,25 @@ const Navbar = () => {
           <Input placeholder="Search for Products" />
         </InputGroup>
 
-        <Select title="dummy" borderColor="transparent" w="30%">
-          <option value="">Categories</option>
-          <option value="men's clothing">men's clothing</option>
+        {/* -------- filter by category ------- */}
+        <Select onChange={handleChange} borderColor="transparent" w="30%">
+          <option value="all">Categories</option>
+          <option value="all">All</option>
+          <option value="men's clothing">Men's clothing</option>
+          <option value="jewelery">Jewelery</option>
+          <option value="electronics">Electronics</option>
+          <option value="women's clothing">Women's clothing</option>
         </Select>
 
-        <Text title="dummy">Recipes</Text>
+        <Text title="dummy" display={["none", "none", "block", "block"]}>
+          Recipes
+        </Text>
 
-        <Text w="30%" title="dummy">
+        <Text
+          w="30%"
+          title="dummy"
+          display={["none", "none", "block", "block"]}
+        >
           Partner With Us
         </Text>
       </Box>
@@ -79,7 +108,7 @@ const Navbar = () => {
         alignItems={"center"}
         justifyContent="space-between"
       >
-        <Text
+        <Box
           title="dummy"
           display="flex"
           alignItems="center"
@@ -87,27 +116,29 @@ const Navbar = () => {
           fontSize={20}
         >
           <BsPersonCircle style={{ marginTop: "5px", fontSize: "30px" }} />
-          <span>signup / login</span>
-        </Text>
+          <Text display={["none", "none", "block", "block"]}>
+            signup / login
+          </Text>
+        </Box>
 
         {/* -------- cart------ */}
-          <Box fontSize={30} ref={btnRef}  onClick={onOpen}>
-            <FaShoppingCart />
-            <Text
-              bg="#e31e24"
-              position="absolute"
-              top="5"
-              ml="5"
-              fontSize={15}
-              borderRadius={50}
-              pl="1.5"
-              pr="1.5"
-              color="#ffff"
-              fontWeight={600}
-            >
-              0
-            </Text>
-          </Box>
+        <Box fontSize={30} ref={btnRef} onClick={onOpen} pr="4">
+          <FaShoppingCart />
+          <Text
+            bg="#e31e24"
+            position="absolute"
+            top="5"
+            ml="5"
+            fontSize={15}
+            borderRadius={50}
+            pl="1.5"
+            pr="1.5"
+            color="#ffff"
+            fontWeight={600}
+          >
+            {total}
+          </Text>
+        </Box>
       </Box>
 
       {/* ------ cart ------ */}
