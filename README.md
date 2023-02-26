@@ -1,7 +1,6 @@
 # LeadsConnect-Assignment
 
-# Features & Pages
-
+# Features & Pages:
 1. Product Page
 2. Single Product Page
 3. Right Side Cart Drawer
@@ -12,9 +11,18 @@
 6. Promo Code
 7. Filter by Category
 6. Loading and Alert Indicators 
+7. Every Page Responve 
+
+# Tech Stack:
+1. React Js
+2. Chakra UI
+3. Redux
+4. Axios
+5. React Icons
 
 Product Page:
 ![image](https://user-images.githubusercontent.com/104199818/221406766-801b8c6c-b8cd-4b5f-8c4d-ba7752712794.png)
+
 ![image](https://user-images.githubusercontent.com/104199818/221406815-d4fd140d-ea22-4118-bdd9-a67b2e255266.png)
 
 Single Product Page:
