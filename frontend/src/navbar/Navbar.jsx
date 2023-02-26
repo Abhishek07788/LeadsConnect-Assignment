@@ -64,19 +64,22 @@ const Navbar = () => {
         >
           <Link to="/">
             <Image
-              display={["none", "none", "block", "block"]}
-              w="235px"
-              h="50px"
+              w={["115px", "115px", "215px", "315px"]}
+              h={["40px", "40px", "50px", "50px"]}
               src={logo}
               alt="logo"
+              ml={[3, 3, 0, 0]}
             />
           </Link>
-          <InputGroup w="50%" display={["none", "none", "block", "block"]}>
+          <InputGroup w="40%" display={["none", "none", "block", "block"]}>
             <InputLeftElement fontSize={20} children={<HiLocationMarker />} />
             <Input placeholder="Enter address" />
           </InputGroup>
 
-          <InputGroup w={["50%", "50%", "100%", "100%"]}>
+          <InputGroup
+            w={["50%", "50%", "60%", "100%"]}
+            display={["none", "none", "block", "block"]}
+          >
             <InputRightElement
               fontSize={20}
               bg="#f2f2f2"
@@ -86,7 +89,12 @@ const Navbar = () => {
           </InputGroup>
 
           {/* -------- filter by category ------- */}
-          <Select onChange={handleChange} borderColor="transparent" w="30%">
+          <Select
+            mr={[6, 6, 0, 0]}
+            onChange={handleChange}
+            borderColor="transparent"
+            w="30%"
+          >
             <option value="all">Categories</option>
             <option value="all">All</option>
             <option value="men's clothing">Men's clothing</option>
@@ -120,15 +128,22 @@ const Navbar = () => {
             alignItems="center"
             gap="3"
             fontSize={20}
+            mr={[6, 6, 0, 0]}
           >
             <BsPersonCircle style={{ fontSize: "30px" }} />
-            <Text display={["none", "none", "block", "block"]}>
+            <Text display={["none", "none", "none", "block"]}>
               signup / login
             </Text>
           </Box>
 
           {/* -------- cart------ */}
-          <Box fontSize={30} ref={btnRef} onClick={onOpen} pr="4">
+          <Box
+            fontSize={30}
+            ref={btnRef}
+            onClick={onOpen}
+            pr={"4"}
+            mr={[6, 6, 0, 0]}
+          >
             <FaShoppingCart />
             <Text
               bg="#e31e24"

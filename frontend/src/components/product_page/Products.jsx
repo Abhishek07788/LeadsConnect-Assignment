@@ -21,6 +21,7 @@ const Products = () => {
   useEffect(() => {
     dispatch(getAllProducts());
     dispatch(getAllCarts());
+    document.title = "Product Page";
   }, []);
 
   return (

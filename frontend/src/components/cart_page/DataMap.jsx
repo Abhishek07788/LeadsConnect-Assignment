@@ -4,6 +4,7 @@ import {
   Input,
   InputGroup,
   InputLeftAddon,
+  SimpleGrid,
   Text,
   useToast,
 } from "@chakra-ui/react";
@@ -61,21 +62,31 @@ const DataMap = (props) => {
   };
 
   return (
-    <Box
-      display="flex"
+    <SimpleGrid
       bg="#ffff"
       p="3"
-      borderRadius={10}
+      display={["grid", "grid", "grid", "flex"]}
       gap="10"
+      borderRadius={10}
       w="100%"
       boxShadow={"rgba(0, 0, 0, 0.24) 0px 3px 8px"}
     >
-      <Image w="90px" h="110px" src={image} alt="img" />
+      <Image
+        w={["100%", "100%", "100%", "90px"]}
+        h={["210px", "210px", "200px", "110px"]}
+        src={image}
+        alt="img"
+      />
       <Box w="100%">
         <Text fontSize="16">{title.slice(0, 60)}...</Text>
 
         {/* --------- e.target.value - cart------ */}
-        <Box display="flex" mt="1" gap="20" alignItems="canter">
+        <Box
+          display="flex"
+          mt="1"
+          gap={["20", "20", "12", "20"]}
+          alignItems="canter"
+        >
           <Text
             display="flex"
             alignItems="center"
@@ -113,7 +124,7 @@ const DataMap = (props) => {
         </Text>
 
         {/* ---------- delete --- */}
-        <Box display="flex" gap="1" fontSize={17} mt="2">
+        <Box display="flex" gap="1" fontSize={[16, 16, 16, 17]} mt="2">
           <Text
             onClick={() => handleDelete(id)}
             _hover={{ color: "red" }}
@@ -127,7 +138,7 @@ const DataMap = (props) => {
           </Link>
         </Box>
       </Box>
-    </Box>
+    </SimpleGrid>
   );
 };
 

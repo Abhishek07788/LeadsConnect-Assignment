@@ -154,6 +154,7 @@ const CartDrawer = ({ btnRef, isOpen, onClose }) => {
           {/* ---------- fOOTER --------- */}
           {cartData.length == 0 ? (
             <Button
+              onClick={onClose}
               color="#e73841"
               bg="#d7d7d7"
               w="200px"
@@ -232,7 +233,12 @@ const CartDrawer = ({ btnRef, isOpen, onClose }) => {
                   gap="2"
                 >
                   <Link to="/cart">
-                    <Button border="1px solid red" pl="2" pr="2">
+                    <Button
+                      onClick={onClose}
+                      border="1px solid red"
+                      pl="2"
+                      pr="2"
+                    >
                       View Cart
                     </Button>
                   </Link>
@@ -245,7 +251,12 @@ const CartDrawer = ({ btnRef, isOpen, onClose }) => {
                   >
                     Checkout Now
                   </Button>
-                  <Button border="1px solid red" pl="2" pr="2">
+                  <Button
+                    onClick={onClose}
+                    border="1px solid red"
+                    pl="2"
+                    pr="2"
+                  >
                     Browse Products
                   </Button>
                 </Box>

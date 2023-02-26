@@ -31,6 +31,7 @@ const SingleProduct = () => {
   // --------- get single product -------
   useEffect(() => {
     dispatch(getSingleProduct(id));
+    document.title = "Single Product Page";
   }, []);
 
   // -------- add to cart --------

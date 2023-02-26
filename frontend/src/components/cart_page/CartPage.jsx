@@ -29,6 +29,7 @@ const CartPage = () => {
   // ---------- get cart data ---------
   useEffect(() => {
     dispatch(getAllCarts());
+    document.title = "Cart Page";
   }, []);
 
   // ---------- get cart totalPrice ---------
@@ -94,6 +95,7 @@ const CartPage = () => {
           isIndeterminate
           visibility={loading ? "visible" : "hidden"}
         />
+
         <Heading>Cart</Heading>
         <Text borderBottom={"5px solid #e8ddd6"} w="80px"></Text>
 
@@ -130,6 +132,7 @@ const CartPage = () => {
               >
                 <Input
                   onChange={(e) => setPromoCode(e.target.value)}
+                  fontSize={[12, 15, 15, 20]}
                   bg="#ffff"
                   borderColor="grey"
                   placeholder="Promo code 'FLAT20' "
@@ -142,14 +145,16 @@ const CartPage = () => {
                   pr="8"
                   pl="8"
                   _hover={{ bg: "#e73841" }}
+                  fontSize={[12, 15, 15, 20]}
                 >
-                  Apply
+                  Apply Promo
                 </Button>
               </Box>
             </Grid>
             {/* ------------ cart data total -------- */}
             <Grid
-              ml="20"
+              m="auto"
+              // ml="20"
               mt="4"
               spacing="5"
               border="3px dotted red"
@@ -160,21 +165,30 @@ const CartPage = () => {
               h="300px"
             >
               <Box p="2" w="100%">
-                <Box display="flex" justifyContent="space-between">
-                  <Heading fontSize={28}>Subtotal (1 item):</Heading>
-                  <Heading fontSize={28}>₹{Math.floor(totalPrice)}.00</Heading>
+                <Box
+                  display={["flex", "flex", "grid", "flex"]}
+                  justifyContent="space-between"
+                >
+                  <Heading fontSize={[15, 18, 20, 28]}>
+                    Subtotal (1 item):
+                  </Heading>
+                  <Heading fontSize={[15, 18, 20, 28]}>
+                    ₹{Math.floor(totalPrice)}.00
+                  </Heading>
                 </Box>
                 <Box
                   mt="5"
-                  display="flex"
+                  display={["flex", "flex", "grid", "flex"]}
                   justifyContent="space-between"
                   fontWeight={600}
-                  fontSize={20}
+                  fontSize={[15, 18, 20, 20]}
                 >
                   <Text>Total</Text>
-                  <Box textAlign="right">
+                  <Box textAlign={["right", "right", "left", "right"]}>
                     <Text>₹{Math.floor(totalPrice)}.00</Text>
-                    <Text fontSize={12}>(incl. GST & delivery)</Text>
+                    <Text fontSize={[9, 10, 10, 12]}>
+                      (incl. GST & delivery)
+                    </Text>
                   </Box>
                 </Box>
 
@@ -183,14 +197,18 @@ const CartPage = () => {
                   color={"#ffff"}
                   w="100%"
                   mt="10"
-                  fontSize={28}
+                  fontSize={[16, 18, 18, 28]}
                   fontWeight="600"
-                  p="7"
+                  p={[3, 3, 3, 7]}
                   _hover={{ bg: "#e73841" }}
                 >
                   CONTINUE
                 </Button>
-                <Text mt="4" fontSize="17" color="#5da4e1">
+                <Text
+                  mt={["4", "4", "10", "4"]}
+                  fontSize={[12, 14, 14, 17]}
+                  color="#5da4e1"
+                >
                   Explore more on NOURISH Store
                 </Text>
               </Box>
