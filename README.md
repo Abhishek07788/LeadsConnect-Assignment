@@ -1,6 +1,6 @@
 # LeadsConnect-Assignment
 
-# Features & Pages:
+## Features & Pages:
 1. Product Page
 2. Single Product Page
 3. Right Side Cart Drawer
@@ -13,7 +13,7 @@
 6. Loading and Alert Indicators 
 7. Every Page Responve 
 
-# Tech Stack:
+## Tech Stack:
 1. React Js
 2. Chakra UI
 3. Redux
