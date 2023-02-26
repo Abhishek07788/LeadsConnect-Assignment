@@ -1,13 +1,20 @@
-import { Grid, Heading, SimpleGrid, Text } from "@chakra-ui/react";
+import {
+  Grid,
+  Heading,
+  SimpleGrid,
+  Skeleton,
+  Stack,
+  Text,
+} from "@chakra-ui/react";
 import React, { useEffect } from "react";
-import Carousel from "../components/Carousel";
+import Carousel from "./Carousel";
 import { useSelector, useDispatch } from "react-redux";
-import { getAllProducts } from "../redux/product/product.action";
-import { getAllCarts } from "../redux/cart/cart.action";
-import ProductMapping from "../components/ProductMapping";
+import { getAllProducts } from "../../redux/product/product.action";
+import { getAllCarts } from "../../redux/cart/cart.action";
+import ProductsMap from "./ProductsMap";
 const Products = () => {
-  const { Loading, Error, productData } = useSelector((store) => store.Product);
-  const { error, loading, cartData } = useSelector((store) => store.Cart);
+  const { productData } = useSelector((store) => store.Product);
+  const { error, cartData } = useSelector((store) => store.Cart);
   const dispatch = useDispatch();
 
   // ---------- get product & cart data ---------
@@ -44,17 +51,8 @@ const Products = () => {
         >
           Deal of <span style={{ color: "red" }}>The Day</span>
         </Text>
-
-        {/* ---------- loading indicator -------- */}
-        {loading || Loading ? (
-          <Heading color="green" textAlign="center" fontSize="20" mt="3">
-            loading please wait...
-          </Heading>
-        ) : (
-          ""
-        )}
         {/* ---------- error indicator -------- */}
-        {error || Error ? (
+        {error ? (
           <Heading color="teal" fontSize={20} textAlign="center">
             server error please refresh the page...
           </Heading>
@@ -63,12 +61,23 @@ const Products = () => {
         )}
 
         {/* ---------- mapping all products ----- */}
-        <SimpleGrid columns={[1, 2, 3, 4]} spacing="10" mt="10">
-          {productData &&
-            productData.map((el) => (
-              <ProductMapping key={el.id} {...el} cartData={cartData} />
-            ))}
-        </SimpleGrid>
+        {productData.length === 0 ? (
+          <Stack w="90%" m="auto">
+            <Heading color="green" textAlign="center" fontSize="25" mt="3">
+              data loading please wait...
+            </Heading>
+            <Skeleton h="26px" />
+            <Skeleton h="60px" />
+            <Skeleton h="26px" />
+          </Stack>
+        ) : (
+          <SimpleGrid columns={[1, 2, 3, 4]} spacing="10" mt="10">
+            {productData &&
+              productData.map((el) => (
+                <ProductsMap key={el.id} {...el} cartData={cartData} />
+              ))}
+          </SimpleGrid>
+        )}
       </Grid>
     </SimpleGrid>
   );

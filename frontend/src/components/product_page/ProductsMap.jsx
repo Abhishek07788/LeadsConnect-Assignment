@@ -10,23 +10,26 @@ import {
   Text,
   useToast,
 } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { BsCart } from "react-icons/bs";
 import { AiTwotoneStar } from "react-icons/ai";
-import { addToCart, getAllCarts } from "../redux/cart/cart.action";
+import { addToCart, getAllCarts } from "../../redux/cart/cart.action";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
 const ProductMapping = (props) => {
   const { id, description, category, title, price, image, rating, cartData } =
     props;
+  const [loading, setLoading] = useState(false);
   const [qty, setQty] = useState(1);
   const toast = useToast();
   const dispatch = useDispatch();
 
   // ---------- add to cat ----------
   const handle_cart_click = (cart) => {
+    setLoading(true);
     dispatch(getAllCarts());
+
     if (qty <= 0) {
       // --- Alert --
       toast({
@@ -37,14 +40,6 @@ const ProductMapping = (props) => {
         position: "top",
       });
     } else {
-      // --- Alert --
-      toast({
-        title: "Please Wait..",
-        status: "info",
-        duration: 500,
-        isClosable: true,
-        position: "top",
-      });
       // ---------- checking if data already exist in cart or not ------
       setTimeout(() => {
         if (
@@ -59,6 +54,7 @@ const ProductMapping = (props) => {
             isClosable: true,
             position: "top",
           });
+          setLoading(false);
         } else {
           dispatch(
             addToCart({
@@ -77,6 +73,7 @@ const ProductMapping = (props) => {
           });
           setTimeout(() => {
             dispatch(getAllCarts());
+            setLoading(false);
           }, 700);
         }
       }, 500);
@@ -146,7 +143,7 @@ const ProductMapping = (props) => {
               onChange={(e) => setQty(e.target.value)}
               borderColor="#cecece"
               fontWeight={600}
-              w={[10, 10, 20, 20]}
+              w={[16, 16, 20, 20]}
               color="#333e48"
               fontSize={20}
               type="number"
@@ -172,6 +169,7 @@ const ProductMapping = (props) => {
             fontSize={[12, 12, 18, 18]}
             pl="1"
             pr="1"
+            isLoading={loading ? true : false}
           >
             <BsCart style={{ color: "#ffff" }} />
             &nbsp; ADD

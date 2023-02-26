@@ -15,11 +15,11 @@ const initialState = {
 export const productReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case productLoading: {
-      return { ...state, Loading: true, Error: false, productData: "" };
+      return { ...state, Loading: true, Error: false };
     }
 
     case productError: {
-      return { ...state, Loading: false, Error: true, productData: "" };
+      return { ...state, Loading: false, Error: true };
     }
 
     case productGet: {

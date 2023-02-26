@@ -6,24 +6,17 @@ import {
   deleteSingleCart,
   getAllCarts,
   updateSingleCart,
-} from "../redux/cart/cart.action";
+} from "../../redux/cart/cart.action";
 
-const CartMapping = (props) => {
+const DataMap = (props) => {
   const { id, title, price, image, quantity } = props;
   const dispatch = useDispatch();
   const toast = useToast();
 
-  const handleDelete = (id) => {
-    // --- Alert --
-    toast({
-      title: "Please Wait..",
-      status: "info",
-      duration: 500,
-      isClosable: true,
-      position: "top",
-    });
-    dispatch(deleteSingleCart(id));
 
+  // --------- DELETE FROM CART ----
+  const handleDelete = (id) => {
+    dispatch(deleteSingleCart(id));
     setTimeout(() => {
       // --- Alert --
       toast({
@@ -39,14 +32,6 @@ const CartMapping = (props) => {
 
   // ---------- Quantity Increase ---------
   const handle_increase_quantity = (id, quantity, price) => {
-    // --- Alert --
-    toast({
-      title: "Please Wait..",
-      status: "info",
-      duration: 500,
-      isClosable: true,
-      position: "top",
-    });
     dispatch(
       updateSingleCart(
         id,
@@ -71,14 +56,6 @@ const CartMapping = (props) => {
         position: "top",
       });
     } else {
-      // --- Alert --
-      toast({
-        title: "Please Wait..",
-        status: "info",
-        duration: 500,
-        isClosable: true,
-        position: "top",
-      });
       dispatch(
         updateSingleCart(
           id,
@@ -153,4 +130,4 @@ const CartMapping = (props) => {
   );
 };
 
-export default CartMapping;
+export default DataMap;

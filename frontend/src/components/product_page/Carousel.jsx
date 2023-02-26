@@ -23,7 +23,7 @@ const Carousel = () => {
       <Image
         animation={"ease-in-out"}
         w="100%"
-        h={["300px","300px","400px","500px"]}
+        h={["300px", "300px", "400px", "500px"]}
         src={images[current]}
         alt="carousel"
       />

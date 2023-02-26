@@ -10,30 +10,71 @@ import {
   DrawerOverlay,
   Image,
   Input,
+  Progress,
   SimpleGrid,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import CartMapping from "../components/CartMapping";
-import cartGif from "../images/cartgif.gif";
+import DataMap from "./DataMap";
+import cartGif from "../../images/cartgif.gif";
 import { Link } from "react-router-dom";
 
-const Cart = ({ btnRef, isOpen, onClose }) => {
-  const { cartData } = useSelector((store) => store.Cart);
-  const [total, setTotal] = useState();
+const CartDrawer = ({ btnRef, isOpen, onClose }) => {
+  const { cartData, loading } = useSelector((store) => store.Cart);
+  const [promoCode, setPromoCode] = useState("");
+  const [totalPrice, setTotalPrice] = useState();
+  const [promoClick, setPromoClick] = useState(false);
+  const toast = useToast();
 
-  // ---------- get cart total ---------
+  // ---------- get cart totalPrice ---------
   useEffect(() => {
     if (cartData.length >= 1) {
-      setTotal(
+      setTotalPrice(
         cartData.reduce((acc, el) => {
           return (acc += el.price);
         }, 0)
       );
     }
   }, [cartData]);
+
+  // ----------- Promo Code ---------
+  const handleClick = () => {
+    if (promoClick) {
+      // --- Alert --
+      toast({
+        title: "Already used!!",
+        status: "error",
+        duration: 2000,
+        isClosable: true,
+        position: "top",
+      });
+    } else {
+      if (promoCode === "FLAT20" || promoCode === "flat20") {
+        setTotalPrice(totalPrice - (20 / 100) * totalPrice);
+        // --- Alert --
+        toast({
+          title: "Promo Code Added.",
+          status: "success",
+          duration: 2000,
+          isClosable: true,
+          position: "top",
+        });
+        setPromoClick(true);
+      } else {
+        // --- Alert --
+        toast({
+          title: "Wrong Promo Code!!",
+          status: "error",
+          duration: 2000,
+          isClosable: true,
+          position: "top",
+        });
+      }
+    }
+  };
 
   return (
     <>
@@ -59,8 +100,14 @@ const Cart = ({ btnRef, isOpen, onClose }) => {
             <Text title="dummy">Your Offers</Text>
           </DrawerHeader>
 
+          {/* ---- -------- Progress loading ---------- */}
+          <Progress
+            size="xs"
+            isIndeterminate
+            visibility={loading ? "visible" : "hidden"}
+          />
           {/* ---------- BODY --------- */}
-          {cartData.length == 0 ? (
+          {cartData.length === 0 ? (
             <Image src={cartGif} alt="empty cart" />
           ) : (
             <DrawerBody bg="#f1f3f8">
@@ -71,10 +118,10 @@ const Cart = ({ btnRef, isOpen, onClose }) => {
               {/* ------------ cart data mapping -------- */}
               <SimpleGrid mt="4" spacing="5">
                 {cartData &&
-                  cartData.map((el) => <CartMapping key={el.id} {...el} />)}
+                  cartData.map((el) => <DataMap key={el.id} {...el} />)}
               </SimpleGrid>
 
-              {/* --- Promo Code --- */}
+              {/* ----------- Promo Code ------------- */}
               <Box
                 display="flex"
                 justifyContent="space-between"
@@ -83,14 +130,20 @@ const Cart = ({ btnRef, isOpen, onClose }) => {
                 mt="10"
                 fontSize={14}
               >
-                <Input bg="#ffff" borderColor="grey" placeholder="Promo code" />
+                <Input
+                  onChange={(e) => setPromoCode(e.target.value)}
+                  bg="#ffff"
+                  borderColor="grey"
+                  placeholder="Promo code 'FLAT20' "
+                />
                 <Button
+                  onClick={handleClick}
                   bg="#e73841"
                   color="#ffff"
                   borderColor="#e73841"
                   pr="8"
                   pl="8"
-                  _hover={{ color: "#e73841" }}
+                  _hover={{ bg: "#e73841" }}
                 >
                   Apply
                 </Button>
@@ -121,7 +174,7 @@ const Cart = ({ btnRef, isOpen, onClose }) => {
                   fontSize={16}
                 >
                   <Text>Total MRP Price ( 1 item )</Text>
-                  <Text>₹{Math.floor(total)}.00</Text>
+                  <Text>₹{Math.floor(totalPrice)}.00</Text>
                 </Box>
                 <Box
                   mt="2"
@@ -162,7 +215,7 @@ const Cart = ({ btnRef, isOpen, onClose }) => {
                   fontSize={16}
                 >
                   <Text>Total MRP Price ( 1 item )</Text>
-                  <Text>₹{Math.floor(total)}.00</Text>
+                  <Text>₹{Math.floor(totalPrice)}.00</Text>
                 </Box>
                 <Text mb="3" fontSize="13" color="#6ac694">
                   Total Discount -₹0.00 (0.00 %) on this order
@@ -178,11 +231,23 @@ const Cart = ({ btnRef, isOpen, onClose }) => {
                   fontSize={[12, 14, 16, 16]}
                   gap="2"
                 >
-                  <Button border="1px solid red">View Cart</Button>
-                  <Button color="#ffff" bg="red">
+                  <Link to="/cart">
+                    <Button border="1px solid red" pl="2" pr="2">
+                      View Cart
+                    </Button>
+                  </Link>
+                  <Button
+                    color="#ffff"
+                    bg="red"
+                    pl="2"
+                    pr="2"
+                    _hover={{ bg: "red" }}
+                  >
                     Checkout Now
                   </Button>
-                  <Button border="1px solid red">Browse Products</Button>
+                  <Button border="1px solid red" pl="2" pr="2">
+                    Browse Products
+                  </Button>
                 </Box>
               </Box>
             </DrawerFooter>
@@ -193,4 +258,4 @@ const Cart = ({ btnRef, isOpen, onClose }) => {
   );
 };
 
-export default Cart;
+export default CartDrawer;
