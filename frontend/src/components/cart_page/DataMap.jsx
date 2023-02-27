@@ -45,7 +45,11 @@ const DataMap = (props) => {
     if (e.target.value)
       setTimeout(() => {
         dispatch(
-          updateSingleCart(id, +e.target.value, +e.target.value * price)
+          updateSingleCart(
+            id,
+            +e.target.value,
+            +e.target.value * Math.floor(price / quantity)
+          )
         );
         setTimeout(() => {
           // --- Alert --
