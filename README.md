@@ -14,11 +14,12 @@
 7. Every Page Responve 
 
 ## Tech Stack:
-1. React Js
-2. Chakra UI
-3. Redux
-4. Axios
-5. React Icons
+1. HTML
+2. React Js
+3. Chakra UI
+4. Redux
+5. Axios
+6. React Icons
 
 Product Page:
 ![image](https://user-images.githubusercontent.com/104199818/221406766-801b8c6c-b8cd-4b5f-8c4d-ba7752712794.png)
